@@ -30,7 +30,7 @@
       pip:
         name: docker
     - name: Deploy monitoring stack
-      become: true # Ensure this task is executed with sudo
+      become: true
       shell: |
         docker compose -f ../MonitoringStack/docker-compose.yml up -d
       args:

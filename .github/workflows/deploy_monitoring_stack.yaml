@@ -58,7 +58,7 @@ jobs:
       run: cat $GITHUB_ENV
 
     - name: Add Terraform IP to Configu
-      run: configu upsert --store 'configu' --set 'Development/Monitoring' --schema './monitoring.cfgu.json' -c "ip=${PUBLIC_IP}""
+      run: configu upsert --store 'configu' --set 'Development/Monitoring' --schema './monitoring.cfgu.json' -c "ip=${PUBLIC_IP}"
 
     - name: Update Ansible Inventory with Public IP
       run: |
