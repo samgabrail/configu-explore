@@ -44,10 +44,9 @@ jobs:
 
     - name: Generate SSH Key File and Set Public IP as Env Var
       run: |
-        terraform output
-        terraform output private_key
         terraform output -raw private_key > /tmp/myKey.pem
         echo "PUBLIC_IP=$(terraform output -raw public_ip)" >> $GITHUB_ENV
+        echo $PUBLIC_IP
       working-directory: ./Terraform
 
     - name: Set Permission for SSH Key
