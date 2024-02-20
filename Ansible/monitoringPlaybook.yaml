@@ -30,16 +30,18 @@
       pip:
         name: docker
 
-    - name: Copy docker-compose file to remote
+    - name: Copy MonitoringStack directory to remote
       ansible.builtin.copy:
-        src: ../MonitoringStack/docker-compose.yml
-        dest: /home/ubuntu/docker-compose.yml
-      become: yes
+        src: ../MonitoringStack/
+        dest: /home/ubuntu/MonitoringStack/
+        directory_mode: 0755
+        recursive: yes
+      become: true
 
     - name: Deploy monitoring stack
-      ansible.builtin.shell: docker compose -f /home/ubuntu/docker-compose.yml up -d
+      ansible.builtin.shell: docker compose -f /home/ubuntu/MonitoringStack/docker-compose.yml up -d
       args:
-        chdir: "/home/ubuntu"
+        chdir: "/home/ubuntu/MonitoringStack"
       become: true
       become_user: root
       register: docker_compose_output
@@ -47,15 +49,3 @@
       delay: 10
       until: docker_compose_output.rc == 0
 
-    # - name: Deploy monitoring stack
-    #   become: true
-    #   shell: |
-    #     docker compose -f ../MonitoringStack/docker-compose.yml up -d
-    #   args:
-    #     chdir: ../MonitoringStack
-    #     executable: /bin/bash
-    #   register: output
-    #   until: output.rc == 0
-    #   retries: 5
-    #   delay: 10
-    #   become_user: root
