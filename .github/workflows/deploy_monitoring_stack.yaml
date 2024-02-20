@@ -38,7 +38,8 @@ jobs:
     - name: Terraform Init and Apply
       run: |
         terraform init
-        terraform apply -auto-approve
+        terraform plan
+        terraform apply
       working-directory: ./Terraform
 
     - name: Generate SSH Key File
