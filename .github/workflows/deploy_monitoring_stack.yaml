@@ -39,6 +39,7 @@ jobs:
       run: |
         terraform init
         terraform apply -auto-approve
+        terraforms state list
         terraform output
         terraform output private_key
         terraform output -raw private_key > /tmp/myKey.pem
@@ -55,7 +56,7 @@ jobs:
       run: chmod 400 /tmp/myKey.pem
 
     - name: Add Terraform IP to Configu
-      run: configu upsert --store 'configu' --set 'Development/Monitoring' --schema './monitoring.cfgu.json' -c 'ip=$(terraform output -raw public_ip)' \
+      run: configu upsert --store 'configu' --set 'Development/Monitoring' --schema './monitoring.cfgu.json' -c 'ip=$(terraform output -raw public_ip)'
 
     - name: Update Ansible Inventory with Public IP
       run: sed -i "s/<placeholder_app>/$(terraform output -raw public_ip)/g" Ansible/inventory
