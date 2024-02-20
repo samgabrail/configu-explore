@@ -46,6 +46,9 @@ jobs:
       run: terraform output -raw private_key > /tmp/myKey.pem
       working-directory: ./Terraform
 
+    - name: Set Permission for SSH Key
+      run: chmod 400 /tmp/myKey.pem
+
     - name: Set Public IP as Env Var
       run: |
         {
@@ -57,10 +60,7 @@ jobs:
 
     - name: Use Public IP
       run: |
-        echo "The public IP is $PUBLIC_IP"
-    
-    - name: Set Permission for SSH Key
-      run: chmod 400 /tmp/myKey.pem
+        env
 
     - name: Add Terraform IP to Configu
       run: configu upsert --store 'configu' --set 'Development/Monitoring' --schema './monitoring.cfgu.json' -c 'ip=$PUBLIC_IP'
