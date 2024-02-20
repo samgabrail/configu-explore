@@ -54,11 +54,11 @@ jobs:
       run: |
         {
             echo "PUBLIC_IP<<EOF"
-            echo $(terraform output -raw public_ip)
+            $(terraform output -raw public_ip)
             echo "EOF"
         } >> "$GITHUB_ENV"
       working-directory: ./Terraform
-      
+
     - name: Debug Terraform Output
       run: |
         terraform output -raw public_ip
