@@ -29,10 +29,10 @@ variable "my_aws_key" {
   default     = "mykey.pem"
 }
 
-variable "my_tags" {
-  type = string
-  description = "A map of tags to add to all resources."
-}
+# variable "my_tags" {
+#   type = string
+#   description = "A map of tags to add to all resources."
+# }
 
 locals {
   # tags = jsondecode(var.my_tags)
