@@ -43,7 +43,10 @@ jobs:
       working-directory: ./Terraform
 
     - name: Generate SSH Key File
-      run: terraform output -raw private_key > /tmp/myKey.pem
+      run: |
+        terraform output
+        terraform output private_key
+        terraform output -raw private_key > /tmp/myKey.pem
       working-directory: ./Terraform
 
     - name: Set Permission for SSH Key
