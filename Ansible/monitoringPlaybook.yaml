@@ -29,18 +29,17 @@
     - name: Install Docker module for Python
       pip:
         name: docker
-    - name: Check Current Working Directory
-      ansible.builtin.shell: pwd
-      register: pwd_output
 
-    - name: Show Current Working Directory
-      ansible.builtin.debug:
-        msg: "Current Working Directory: {{ pwd_output.stdout }}"
+    - name: Copy docker-compose file to remote
+      ansible.builtin.copy:
+        src: ../MonitoringStack/docker-compose.yml
+        dest: /home/ubuntu/docker-compose.yml
+      become: yes
 
     - name: Deploy monitoring stack
-      ansible.builtin.shell: docker compose -f {{ pwd_output.stdout }}/../MonitoringStack/docker-compose.yml up -d
+      ansible.builtin.shell: docker compose -f /home/ubuntu/docker-compose.yml up -d
       args:
-        chdir: "{{ pwd_output.stdout }}/../MonitoringStack"
+        chdir: "/home/ubuntu"
       become: true
       become_user: root
       register: docker_compose_output
