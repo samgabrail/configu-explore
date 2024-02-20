@@ -51,12 +51,8 @@ jobs:
       run: chmod 400 /tmp/myKey.pem
 
     - name: Set Public IP as Env Var
-      run: |
-        {
-            echo "PUBLIC_IP<<EOF"
-            $(terraform output -raw public_ip)
-            echo "EOF"
-        } >> "$GITHUB_ENV"
+      run: terraform output -raw public_ip >> $GITHUB_ENV
+
       working-directory: ./Terraform
 
     - name: Debug Terraform Output
