@@ -1,9 +1,9 @@
 [all:children]
-jenkins
+monitoring
 
 [all:vars]
 ansible_user=ubuntu
 ansible_python_interpreter=/usr/bin/python3
 
-[jenkins]
-jenkinsvm ansible_host=<placeholder_app>
+[monitoring]
+monitoringvm ansible_host=<placeholder_app>

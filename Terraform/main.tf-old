@@ -139,7 +139,7 @@ resource "aws_instance" "configu" {
   vpc_security_group_ids      = [aws_security_group.configu.id]
 
   tags = {
-    Name = "${var.prefix}-configu-Jenkins-instance"
+    Name = "${var.prefix}-configu-monitoring-instance"
   }
 }
 
