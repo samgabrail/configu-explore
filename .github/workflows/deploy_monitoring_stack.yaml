@@ -61,7 +61,7 @@ jobs:
       run: configu upsert --store 'configu' --set 'Development/Monitoring' --schema './monitoring.cfgu.json' -c 'ip=$PUBLIC_IP'
 
     - name: Update Ansible Inventory with Public IP
-      run: sed -i "s/<placeholder_app>/$(terraform output -raw public_ip)/g" Ansible/inventory
+      run: sed -i "s/<placeholder_app>/$PUBLIC_IP/g" Ansible/inventory
 
     - name: Install Ansible
       run: pip3 install --user ansible
