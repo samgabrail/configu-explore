@@ -12,6 +12,7 @@ jobs:
   deploy_monitoring_stack:
     runs-on: ubuntu-latest
     env:
+      TF_LOG: INFO
       CONFIGU_ORG: ${{ secrets.CONFIGU_ORG }}
       CONFIGU_TOKEN: ${{ secrets.CONFIGU_TOKEN }}
     #   TF_TOKEN_backend_api_env0_com: ${{ secrets.TF_TOKEN_backend_api_env0_com }}
