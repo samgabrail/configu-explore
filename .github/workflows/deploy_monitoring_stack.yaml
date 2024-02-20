@@ -62,6 +62,13 @@ jobs:
       run: |
         env
 
+        - name: Debug Terraform Output
+        run: |
+          terraform output -raw public_ip
+        working-directory: ./Terraform
+  
+    - name: Debug GITHUB_ENV Content
+      run: cat $GITHUB_ENV
     - name: Add Terraform IP to Configu
       run: configu upsert --store 'configu' --set 'Development/Monitoring' --schema './monitoring.cfgu.json' -c 'ip=$PUBLIC_IP'
 
