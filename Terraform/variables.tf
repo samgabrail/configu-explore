@@ -30,9 +30,11 @@ variable "my_aws_key" {
 }
 
 variable "my_tags" {
-  type = map(string)
+  type = string
   description = "A map of tags to add to all resources."
-  default = {
-    "Name" = "monitoring"
-  }
+}
+
+locals {
+  # tags = jsondecode(var.my_tags)
+  tags = {"Name" = "terraform-example"}
 }

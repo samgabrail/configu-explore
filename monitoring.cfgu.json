@@ -31,6 +31,11 @@
     "description": "AWS key to SSH into EC2 instances",
     "default": "mykey.pem"
   },
+  "my_tags": {
+    "type": "JSONSchema",
+    "description": "A map of tags to add to all resources.",
+    "schema": {"type": "object"}
+  },
   "ip":{
     "type": "IPv4",
     "description": "Monitoring EC2 instance IP"

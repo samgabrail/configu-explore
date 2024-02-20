@@ -14,7 +14,8 @@ jobs:
     env:
       CONFIGU_ORG: ${{ secrets.CONFIGU_ORG }}
       CONFIGU_TOKEN: ${{ secrets.CONFIGU_TOKEN }}
-      TF_TOKEN_backend_api_env0_com: ${{ secrets.TF_TOKEN_backend_api_env0_com }}
+    #   TF_TOKEN_backend_api_env0_com: ${{ secrets.TF_TOKEN_backend_api_env0_com }}
+      TF_TOKEN_app_terraform_io: ${{ secrets.TF_TOKEN_app_terraform_io }}
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
@@ -39,18 +40,14 @@ jobs:
       run: |
         terraform init
         terraform apply -auto-approve
-        terraform state list
+      working-directory: ./Terraform
+
+    - name: Generate SSH Key File
+      run: |
         terraform output
         terraform output private_key
         terraform output -raw private_key > /tmp/myKey.pem
       working-directory: ./Terraform
-
-    # - name: Generate SSH Key File
-    #   run: |
-    #     terraform output
-    #     terraform output private_key
-    #     terraform output -raw private_key > /tmp/myKey.pem
-    #   working-directory: ./Terraform
 
     - name: Set Permission for SSH Key
       run: chmod 400 /tmp/myKey.pem

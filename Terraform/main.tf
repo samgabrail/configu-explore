@@ -1,8 +1,29 @@
+# terraform {
+#   required_version = "<= 1.5.7"
+#   cloud {
+#     hostname     = "backend.api.env0.com"
+#     organization = "1cec7bbf-68cc-43a9-9f82-95d654bb6489.cdd3b8d6-42ca-4581-a9a3-0df300cf4ba6"
+#     workspaces {
+#       name = "configu-demo"
+#     }
+#   }
+#   required_providers {
+#     aws = {
+#       source  = "hashicorp/aws"
+#       version = "4.22.0"
+#     }
+#     tls = {
+#       source  = "hashicorp/tls"
+#       version = "4.0.0"
+#     }
+#   }
+# }
+
 terraform {
   required_version = "<= 1.5.7"
-  cloud {
-    hostname     = "backend.api.env0.com"
-    organization = "1cec7bbf-68cc-43a9-9f82-95d654bb6489.cdd3b8d6-42ca-4581-a9a3-0df300cf4ba6"
+    cloud {
+    organization = "TeKanAid"
+
     workspaces {
       name = "configu-demo"
     }
@@ -27,19 +48,14 @@ resource "aws_vpc" "configu" {
   cidr_block           = var.address_space
   enable_dns_hostnames = true
 
-  tags = {
-    name        = "${var.prefix}-vpc-${var.region}"
-    environment = "Dev"
-  }
+  tags = local.tags
 }
 
 resource "aws_subnet" "configu" {
   vpc_id     = aws_vpc.configu.id
   cidr_block = var.subnet_prefix
 
-  tags = {
-    name = "${var.prefix}-subnet"
-  }
+  tags = local.tags
 }
 
 resource "aws_security_group" "configu" {
@@ -77,17 +93,13 @@ resource "aws_security_group" "configu" {
     prefix_list_ids = []
   }
 
-  tags = {
-    Name = "${var.prefix}-security-group"
-  }
+  tags = local.tags
 }
 
 resource "aws_internet_gateway" "configu" {
   vpc_id = aws_vpc.configu.id
 
-  tags = {
-    Name = "${var.prefix}-internet-gateway"
-  }
+  tags = local.tags
 }
 
 resource "aws_route_table" "configu" {
@@ -138,9 +150,7 @@ resource "aws_instance" "configu" {
   subnet_id                   = aws_subnet.configu.id
   vpc_security_group_ids      = [aws_security_group.configu.id]
 
-  tags = {
-    Name = "${var.prefix}-configu-Jenkins-instance"
-  }
+  tags = local.tags
 }
 
 resource "tls_private_key" "configu" {
