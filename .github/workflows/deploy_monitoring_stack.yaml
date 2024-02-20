@@ -47,7 +47,9 @@ jobs:
       working-directory: ./Terraform
 
     - name: Set Public IP as Env Var
-      run: printf "PUBLIC_IP=%s" "$(terraform output -raw public_ip)" >> $GITHUB_ENV
+      run: |
+        echo "PUBLIC_IP=$(terraform output public_ip)<<EOF" >> $GITHUB_ENV
+        echo "EOF" >> $GITHUB_ENV
       working-directory: ./Terraform
 
     - name: Use Public IP
