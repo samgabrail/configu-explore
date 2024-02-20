@@ -1,0 +1,43 @@
+---
+- hosts: all
+  become_user: root
+  become: true
+  tasks:
+    - name: Install pip3 and unzip
+      apt:
+        update_cache: yes
+        pkg:
+        - python3-pip
+        - unzip
+      register: result
+      until: result is not failed
+      retries: 5
+      delay: 5
+    - name: Add Docker GPG apt Key
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+    - name: Add Docker Repository
+      apt_repository:
+        repo: deb https://download.docker.com/linux/ubuntu focal stable
+        state: present
+    - name: Update apt and install docker-ce
+      apt:
+        name: docker-ce
+        state: latest
+        update_cache: true
+    - name: Install Docker module for Python
+      pip:
+        name: docker
+    - name: Deploy monitoring stack
+      become: true # Ensure this task is executed with sudo
+      shell: |
+        docker compose -f /path/to/your/docker-compose.yml up -d
+      args:
+        chdir: /path/to/your/docker-compose-directory
+        executable: /bin/bash
+      register: output
+      until: output.rc == 0
+      retries: 5
+      delay: 10
+      become_user: root

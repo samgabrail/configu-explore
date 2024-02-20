@@ -74,3 +74,16 @@ configu eval \
 --format 'TerraformTfvars' \
 > "var.auto.tfvars"
 ```
+
+
+## Demo
+
+### Terraform
+
+Let's first get env0 ready for Terraform. Run this command:
+```bash
+terraform login backend.api.env0.com
+```
+
+Then follow the prompts to login.
+
