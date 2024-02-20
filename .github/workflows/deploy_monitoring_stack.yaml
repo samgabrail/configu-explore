@@ -39,9 +39,11 @@ jobs:
       run: |
         terraform init
         terraform apply -auto-approve
+      working-directory: ./Terraform
 
     - name: Generate SSH Key File
       run: terraform output -raw private_key > /tmp/myKey.pem
+      working-directory: ./Terraform
 
     - name: Set Permission for SSH Key
       run: chmod 400 /tmp/myKey.pem
