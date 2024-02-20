@@ -14,8 +14,9 @@ jobs:
     env:
       CONFIGU_ORG: ${{ secrets.CONFIGU_ORG }}
       CONFIGU_TOKEN: ${{ secrets.CONFIGU_TOKEN }}
-      ENV0_API_KEY: ${{ secrets.ENV0_API_KEY }}
-      ENV0_API_SECRET: ${{ secrets.ENV0_API_SECRET }}
+    #   ENV0_API_KEY: ${{ secrets.ENV0_API_KEY }}
+    #   ENV0_API_SECRET: ${{ secrets.ENV0_API_SECRET }}
+      TF_TOKEN_backend_api_env0_com: ${{ secrets.TF_TOKEN_backend_api_env0_com }}
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
