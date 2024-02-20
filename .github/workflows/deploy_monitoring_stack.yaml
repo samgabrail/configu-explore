@@ -39,7 +39,7 @@ jobs:
       run: |
         terraform init
         terraform apply -auto-approve
-        terraforms state list
+        terraform state list
         terraform output
         terraform output private_key
         terraform output -raw private_key > /tmp/myKey.pem
