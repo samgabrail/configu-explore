@@ -37,7 +37,7 @@
     "schema": {"type": "object"}
   },
   "ip":{
-    "type": "IPv4",
+    "type": "String",
     "description": "Monitoring EC2 instance IP"
   }
 }
