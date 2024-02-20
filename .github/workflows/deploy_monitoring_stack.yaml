@@ -11,9 +11,19 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    env:
+      CONFIGU_ORG: ${{ secrets.CONFIGU_ORG }}
+      CONFIGU_TOKEN: ${{ secrets.CONFIGU_TOKEN }}
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
+
+    - name: Setup Configu CLI
+      uses: configu/setup-cli-action@v1
+
+    - name: Export configurations
+      run: | 
+        configu eval --store 'configu' --set 'production' --schema 'path/to/schema.cfgu.json' | configu export
 
     - name: Set up Python
       uses: actions/setup-python@v2
@@ -49,4 +59,4 @@ jobs:
       run: cat Ansible/inventory
 
     - name: Run Ansible Playbook
-      run: cd Ansible && ansible-playbook --private-key /tmp/myKey.pem -i inventory jenkinsPlaybook.yaml
+      run: cd Ansible && ansible-playbook --private-key /tmp/myKey.pem -i inventory monitoringPlaybook.yaml

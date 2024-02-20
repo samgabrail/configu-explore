@@ -1,5 +1,6 @@
 variable "prefix" {
   description = "This prefix will be included in the name of most resources."
+  default = "configu"
 }
 
 variable "region" {
@@ -26,4 +27,9 @@ variable "my_aws_key" {
   type        = string
   description = "AWS key to SSH into EC2 instances"
   default     = "mykey.pem"
+}
+
+variable "my_tags" {
+  type = map(string)
+  description = "A map of tags to add to all resources."
 }
