@@ -32,9 +32,9 @@
     - name: Deploy monitoring stack
       become: true # Ensure this task is executed with sudo
       shell: |
-        docker compose -f /path/to/your/docker-compose.yml up -d
+        docker compose -f ../MonitoringStack/docker-compose.yml up -d
       args:
-        chdir: /path/to/your/docker-compose-directory
+        chdir: ../MonitoringStack
         executable: /bin/bash
       register: output
       until: output.rc == 0
