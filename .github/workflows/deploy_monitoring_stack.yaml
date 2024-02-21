@@ -1,12 +1,16 @@
 name: Monitoring Stack
 
 on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Deployment Environment'
+        required: true
+        default: 'development'
+        type: choice
+        options:
+          - production
+          - development
 
 jobs:
   deploy_monitoring_stack:
@@ -24,8 +28,13 @@ jobs:
     - name: Setup Configu CLI
       uses: configu/setup-cli-action@v1
 
-    - name: Export configurations
+    - name: Export configurations for Development
+      if: ${{ github.event.inputs.environment == 'development' }}
       run: configu eval --store 'configu' --set 'Development/Monitoring' --schema './monitoring.cfgu.json' | configu export --format 'TerraformTfvars' > "./Terraform/var.auto.tfvars"
+
+    - name: Export configurations for Production
+      if: ${{ github.event.inputs.environment == 'production' }}
+      run: configu eval --store 'configu' --set 'Production/Monitoring' --schema './monitoring.cfgu.json' | configu export --format 'TerraformTfvars' > "./Terraform/var.auto.tfvars"
 
     - name: Set up Python
       uses: actions/setup-python@v2
@@ -37,10 +46,17 @@ jobs:
       with:
         terraform_version: '1.5.7'
 
-    - name: Terraform Init and Apply
+    - name: Initialize Terraform
       run: |
-        terraform init
-        terraform apply -auto-approve
+        if [ "${{ github.event.inputs.environment }}" == "production" ]; then
+          terraform init -backend-config="workspaces.name=monitoring-configu-prod"
+        else
+          terraform init -backend-config="workspaces.name=monitoring-configu-dev"
+        fi
+      working-directory: ./Terraform
+
+    - name: Apply Terraform Configuration
+      run: terraform apply -auto-approve
       working-directory: ./Terraform
 
     - name: Generate SSH Key File

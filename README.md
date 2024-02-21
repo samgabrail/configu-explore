@@ -3,7 +3,7 @@ This is a repo to get to know Configu and demo it in action. We will create a mo
 
 ## Configu
 
-Let's set up our configurations ahead of time. You can do this via the UI or cli
+Let's set up our configurations ahead of time. You can do this via the UI or cli. We will do this once for dev and once for prod:
 
 ```bash
 configu upsert --store 'configu' --set 'Development/Monitoring' --schema './monitoring.cfgu.json' \
@@ -12,8 +12,17 @@ configu upsert --store 'configu' --set 'Development/Monitoring' --schema './moni
 -c 'address_space=10.0.0.0/16' \
 -c 'subnet_prefix=10.0.10.0/24' \
 -c 'instance_type=t2.micro' \
--c 'my_aws_key=mykey.pem' \
--c 'my_tags={"Name": "configu-demo", "Environment": "Development"}'
+-c 'my_aws_key=mykey.pem'
+```
+
+```bash
+configu upsert --store 'configu' --set 'Production/Monitoring' --schema './monitoring.cfgu.json' \
+-c 'prefix=configu' \
+-c 'region=us-west-1' \
+-c 'address_space=10.1.0.0/16' \
+-c 'subnet_prefix=10.1.10.0/24' \
+-c 'instance_type=t2.micro' \
+-c 'my_aws_key=mykey.pem'
 ```
 
 We can now retrieve these values from within the pipeline.

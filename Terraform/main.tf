@@ -1,32 +1,7 @@
-# terraform {
-#   required_version = "<= 1.5.7"
-#   cloud {
-#     hostname     = "backend.api.env0.com"
-#     organization = "1cec7bbf-68cc-43a9-9f82-95d654bb6489.cdd3b8d6-42ca-4581-a9a3-0df300cf4ba6"
-#     workspaces {
-#       name = "configu-demo"
-#     }
-#   }
-#   required_providers {
-#     aws = {
-#       source  = "hashicorp/aws"
-#       version = "4.22.0"
-#     }
-#     tls = {
-#       source  = "hashicorp/tls"
-#       version = "4.0.0"
-#     }
-#   }
-# }
-
 terraform {
   required_version = "<= 1.5.7"
     cloud {
     organization = "TeKanAid"
-
-    workspaces {
-      name = "configu-demo"
-    }
   }
   required_providers {
     aws = {
