@@ -2,6 +2,15 @@ name: Destroy Monitoring Stack Infrastructure
 
 on:
   workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Deployment Environment'
+        required: true
+        default: 'development'
+        type: choice
+        options:
+          - production
+          - development
 
 jobs:
   destroy_infra:
@@ -20,10 +29,12 @@ jobs:
       with:
         terraform_version: '1.5.7'
 
-    - name: Terraform Init
+    - name: Initialize Terraform with Dynamic Backend Config
       run: terraform init
       working-directory: ./Terraform
-
+      env:
+        TF_CLI_ARGS_init: -backend-config=${{ github.event.inputs.environment }}.hcl
+      
     - name: Terraform Destroy
       run: terraform destroy -auto-approve
       working-directory: ./Terraform
