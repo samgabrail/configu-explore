@@ -70,8 +70,13 @@ jobs:
     - name: Debug GITHUB_ENV Content
       run: cat $GITHUB_ENV
 
-    - name: Add Terraform IP to Configu
+    - name: Add Terraform IP to Configu for Development
+      if: ${{ github.event.inputs.environment == 'development' }}
       run: configu upsert --store 'configu' --set 'Development/Monitoring' --schema './monitoring.cfgu.json' -c "ip=${PUBLIC_IP}"
+
+    - name: Add Terraform IP to Configu for Production
+      if: ${{ github.event.inputs.environment == 'production' }}
+      run: configu upsert --store 'configu' --set 'Production/Monitoring' --schema './monitoring.cfgu.json' -c "ip=${PUBLIC_IP}"
 
     - name: Update Ansible Inventory with Public IP
       run: sed -i "s/<placeholder_app>/$PUBLIC_IP/g" Ansible/inventory
