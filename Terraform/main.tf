@@ -1,6 +1,6 @@
 terraform {
   required_version = "<= 1.5.7"
-    cloud {
+    backend "remote" {
     organization = "TeKanAid"
   }
   required_providers {
