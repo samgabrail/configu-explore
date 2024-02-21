@@ -1,3 +1,3 @@
-greeting = "bonjour"
+greeting = "hello"
 subject = "Sam"
-message = "bonjour, Sam!"
+message = "hello, Sam!"

@@ -25,11 +25,11 @@ The Upsert command is used to create, update, or delete Configs in a ConfigStore
 
 ```bash
 configu upsert \
---store 'configu' --set 'Development' --schema './start.cfgu.json' \
+--store 'configu' --set 'Staging' --schema './start.cfgu.json' \
 --config 'GREETING=bonjour'
 
 configu upsert \
---store 'configu' --set 'Development/QA' --schema './start.cfgu.json' \
+--store 'configu' --set 'QA' --schema './start.cfgu.json' \
 --config 'SUBJECT=Sam'
 ```
 
@@ -39,7 +39,7 @@ The Export command is used to fetch and validate Configs as an Object from a Con
 
 ```bash
 configu eval \
---store 'configu' --set 'Development/QA' --schema './start.cfgu.json' \
+--store 'configu' --set 'QA' --schema './start.cfgu.json' \
 | configu export \
 --format 'JSON' \
 > 'greeting.json'
@@ -49,7 +49,7 @@ Export to a `.env` file.
 
 ```bash
 configu eval \
---store 'configu' --set 'Development/QA' --schema './start.cfgu.json' \
+--store 'configu' --set 'QA' --schema './start.cfgu.json' \
 | configu export \
 --format "Dotenv" \
 > ".env"
@@ -59,7 +59,7 @@ Export to a `KubernetesConfigMap` file.
 
 ```bash
 configu eval \
---store 'configu' --set 'Development/QA' --schema './start.cfgu.json' \
+--store 'configu' --set 'QA' --schema './start.cfgu.json' \
 | configu export \
 --format 'KubernetesConfigMap' \
 > "kubeconfigmap.yaml"
@@ -69,7 +69,7 @@ Export to a `Terraform tfvars` file.
 
 ```bash
 configu eval \
---store 'configu' --set 'Development/QA' --schema './start.cfgu.json' \
+--store 'configu' --set 'QA' --schema './start.cfgu.json' \
 | configu export \
 --format 'TerraformTfvars' \
 > "var.auto.tfvars"

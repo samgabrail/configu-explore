@@ -22,7 +22,7 @@ configu upsert --store 'configu' --set 'Production/Monitoring' --schema './monit
 -c 'address_space=10.1.0.0/16' \
 -c 'subnet_prefix=10.1.10.0/24' \
 -c 'instance_type=t2.micro' \
--c 'my_aws_key=mykey.pem'
+-c 'my_aws_key=mykey_prod.pem'
 ```
 
 We can now retrieve these values from within the pipeline.
