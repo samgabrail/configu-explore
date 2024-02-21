@@ -24,6 +24,9 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
+    - name: Setup Configu CLI
+      uses: configu/setup-cli-action@v1
+      
     - name: Export configurations for Development
       if: ${{ github.event.inputs.environment == 'development' }}
       run: configu eval --store 'configu' --set 'Development/Monitoring' --schema './monitoring.cfgu.json' | configu export --format 'TerraformTfvars' > "./Terraform/var.auto.tfvars"
@@ -31,7 +34,7 @@ jobs:
     - name: Export configurations for Production
       if: ${{ github.event.inputs.environment == 'production' }}
       run: configu eval --store 'configu' --set 'Production/Monitoring' --schema './monitoring.cfgu.json' | configu export --format 'TerraformTfvars' > "./Terraform/var.auto.tfvars"
-      
+
     - name: Install Terraform
       uses: hashicorp/setup-terraform@v2
       with:
