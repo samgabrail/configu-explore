@@ -1,8 +1,6 @@
 terraform {
   required_version = "<= 1.5.7"
-    backend "remote" {
-    organization = "TeKanAid"
-  }
+  backend "remote" {}
   required_providers {
     aws = {
       source  = "hashicorp/aws"

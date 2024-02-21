@@ -46,14 +46,11 @@ jobs:
       with:
         terraform_version: '1.5.7'
 
-    - name: Initialize Terraform
-      run: |
-        if [ "${{ github.event.inputs.environment }}" == "production" ]; then
-          terraform init -backend-config="workspaces.name=monitoring-configu-prod"
-        else
-          terraform init -backend-config="workspaces.name=monitoring-configu-dev"
-        fi
+    - name: Initialize Terraform with Dynamic Backend Config
+      run: terraform init
       working-directory: ./Terraform
+      env:
+        TF_CLI_ARGS_init: -backend-config=${{ github.event.inputs.environment }}.hcl
 
     - name: Apply Terraform Configuration
       run: terraform apply -auto-approve
