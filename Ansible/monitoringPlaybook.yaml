@@ -35,7 +35,6 @@
         src: ../MonitoringStack/
         dest: /home/ubuntu/MonitoringStack/
         directory_mode: 0755
-        recursive: yes
       become: true
 
     - name: Deploy monitoring stack
