@@ -1,0 +1,29 @@
+name: Destroy Monitoring Stack Infrastructure
+
+on:
+  workflow_dispatch:
+
+jobs:
+  destroy_infra:
+    runs-on: ubuntu-latest
+    env:
+      TF_LOG: ERROR
+      CONFIGU_ORG: ${{ secrets.CONFIGU_ORG }}
+      CONFIGU_TOKEN: ${{ secrets.CONFIGU_TOKEN }}
+      TF_TOKEN_app_terraform_io: ${{ secrets.TF_TOKEN_app_terraform_io }}
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Install Terraform
+      uses: hashicorp/setup-terraform@v2
+      with:
+        terraform_version: '1.5.7'
+
+    - name: Terraform Init
+      run: terraform init
+      working-directory: ./Terraform
+
+    - name: Terraform Destroy
+      run: terraform destroy -auto-approve
+      working-directory: ./Terraform

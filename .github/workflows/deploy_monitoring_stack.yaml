@@ -7,12 +7,7 @@ on:
   pull_request:
     branches:
       - main
-  workflow_dispatch:
-    inputs:
-      action:
-        description: 'Terraform Action (apply or destroy)'
-        required: true
-        default: 'apply'
+
 jobs:
   deploy_monitoring_stack:
     runs-on: ubuntu-latest
@@ -44,13 +39,8 @@ jobs:
 
     - name: Terraform Init and Apply
       run: |
-        if [ "${{ github.event.inputs.action }}" == "destroy" ]; then
-            terraform init
-            terraform destroy -auto-approve
-        else
-            terraform init
-            terraform apply -auto-approve
-        fi
+        terraform init
+        terraform apply -auto-approve
       working-directory: ./Terraform
 
     - name: Generate SSH Key File
