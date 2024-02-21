@@ -29,12 +29,8 @@ variable "my_aws_key" {
   default     = "mykey.pem"
 }
 
-# variable "my_tags" {
-#   type = string
-#   description = "A map of tags to add to all resources."
-# }
-
-locals {
-  # tags = jsondecode(var.my_tags)
-  tags = {"Name" = "terraform-example"}
+variable "tags" {
+  type = map(string)
+  description = "A map of tags to add to all resources."
+  default = {"Name" = "monitoring-configu-demo"}
 }

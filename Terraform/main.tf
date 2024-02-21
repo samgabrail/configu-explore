@@ -21,14 +21,14 @@ resource "aws_vpc" "configu" {
   cidr_block           = var.address_space
   enable_dns_hostnames = true
 
-  tags = local.tags
+  tags = var.tags
 }
 
 resource "aws_subnet" "configu" {
   vpc_id     = aws_vpc.configu.id
   cidr_block = var.subnet_prefix
 
-  tags = local.tags
+  tags = var.tags
 }
 
 resource "aws_security_group" "configu" {
@@ -66,13 +66,13 @@ resource "aws_security_group" "configu" {
     prefix_list_ids = []
   }
 
-  tags = local.tags
+  tags = var.tags
 }
 
 resource "aws_internet_gateway" "configu" {
   vpc_id = aws_vpc.configu.id
 
-  tags = local.tags
+  tags = var.tags
 }
 
 resource "aws_route_table" "configu" {
@@ -123,7 +123,7 @@ resource "aws_instance" "configu" {
   subnet_id                   = aws_subnet.configu.id
   vpc_security_group_ids      = [aws_security_group.configu.id]
 
-  tags = local.tags
+  tags = var.tags
 }
 
 resource "tls_private_key" "configu" {
